@@ -1,11 +1,12 @@
 import MenuItem from "./components/MenuItem"
 import OrderContents from "./components/OrderContents"
+import TipForm from "./components/TipForm"
 import OrderTotals from "./components/OrderTotals"
 import { menuItems } from "./data/db"
 import useOrder from "./hooks/useOrder"
 
 function App() {
-  const {order,addItem,removeItem}=useOrder()
+  const {order,addItem,removeItem,tip,setTip,placeOrder}=useOrder()
   return (
     <>
        <header className="bg-teal-400 py-5">
@@ -27,13 +28,28 @@ function App() {
             </div>
           </div>
           <div className="border border-dashed border-slate-300 p-5 rounded-lg space-y-10">
-          <OrderContents
-          order={order}
-          removeItem={removeItem}
-          />
-          <OrderTotals
-            order={order}
-          />
+            {order.length>0 ? (
+              <>
+              <OrderContents
+                  order={order}
+                  removeItem={removeItem}
+                  />
+                <TipForm
+                setTip={setTip}
+                tip={tip}
+                
+                />
+          
+              <OrderTotals
+                order={order}
+                tip={tip}
+                placeOrder={placeOrder}
+              />
+              </>
+            ):(
+              <p className="text-center">Orden Vacia</p>
+            )}
+          
           </div>
        </main>
 
